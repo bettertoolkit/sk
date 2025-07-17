@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Convert images to PDF online. Choose quality settings and export JPG, PNG, or WEBP files to PDF quickly and securely." />
+  <meta name="keywords" content="Image to PDF, Convert image, Image PDF tool, Online converter, Compress image to PDF" />
+  <meta name="author" content="YourBrand" />
+  <title>Image to PDF Converter – HD Online Tool</title>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-app-pub-5389843691172276/4068368758", // Replace with your Ad Unit ID
+      enable_page_level_ads: true
+    });
+  </script>
+
+  <!-- FontAwesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-color: #0056d2;
+      --primary-light: #eaf0fb;
+      --danger-color: #dc3545;
+      --success-color: #28a745;
+      --warning-color: #ffc107;
+      --text-color: #333;
+      --text-light: #666;
+      --border-color: #ddd;
+      --shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--primary-light);
+      color: var(--text-color);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: var(--primary-color);
+      color: white;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    header p {
+      font-size: clamp(0.875rem, 2vw, 1rem);
+      margin-top: 0.5rem;
+      opacity: 0.9;
+    }
+
+    .container {
+      width: calc(100% - 2rem);
+      max-width: 850px;
+      margin: 1.5rem auto;
+      background: #fff;
+      padding: clamp(1.25rem, 3vw, 2rem);
+      border-radius: 12px;
+      box-shadow: 0 0 18px rgba(0,0,0,0.06);
+      flex: 1;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      font-size: clamp(0.9375rem, 2vw, 1.0625rem);
+    }
+
+    .file-input-wrapper {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .file-input-label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(1.5rem, 3vw, 2rem) 1rem;
+      border: 2px dashed var(--border-color);
+      border-radius: 8px;
+      background-color: #f8f8f8;
+      cursor: pointer;
+      transition: var(--transition);
+      width: 100%;
+    }
+
+    .file-input-label:hover {
+      border-color: var(--primary-color);
+      background-color: #f0f7ff;
+    }
+
+    .file-input-label i {
+      font-size: clamp(1.75rem, 4vw, 2rem);
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .file-input-label span {
+      font-size: clamp(0.8125rem, 2vw, 0.875rem);
+      color: var(--text-light);
+      text-align: center;
+    }
+
+    input[type="file"] {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    .preview-container {
+      margin-top: 1.5rem;
+    }
+
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .preview-title {
+      font-weight: 600;
+      color: var(--text-color);
+      font-size: clamp(0.9375rem, 2vw, 1.0625rem);
+    }
+
+    .clear-all {
+      background: none;
+      border: none;
+      color: var(--danger-color);
+      font-size: clamp(0.8125rem, 2vw, 0.875rem);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      transition: var(--transition);
+    }
+
+    .clear-all:hover {
+      background-color: rgba(220, 53, 69, 0.1);
+    }
+
+    .preview {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .preview-item {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: var(--transition);
+      aspect-ratio: 1;
+    }
+
+    .preview-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .preview-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: #f5f5f5;
+    }
+
+    .preview-item-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+      color: white;
+      padding: 0.5rem;
+      font-size: 0.6875rem;
+      opacity: 0;
+      transition: var(--transition);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .preview-item:hover .preview-item-info {
+      opacity: 1;
+    }
+
+    .preview-item-actions {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .preview-action-btn {
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      border: none;
+      background-color: rgba(0,0,0,0.6);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 0.75rem;
+    }
+
+    .preview-action-btn:hover {
+      transform: scale(1.1);
+      background-color: rgba(0,0,0,0.8);
+    }
+
+    .preview-action-btn.remove {
+      background-color: rgba(220, 53, 69, 0.8);
+    }
+
+    .preview-action-btn.remove:hover {
+      background-color: var(--danger-color);
+    }
+
+    /* Quality Settings Section */
+    .quality-settings {
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .quality-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .quality-title {
+      font-weight: 600;
+      color: var(--text-color);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: clamp(0.9375rem, 2vw, 1.0625rem);
+    }
+
+    .quality-value {
+      font-size: clamp(0.875rem, 2vw, 1rem);
+    }
+
+    .quality-presets {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .quality-preset {
+      flex: 1;
+      min-width: 100px;
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background: white;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+      font-size: clamp(0.8125rem, 2vw, 0.875rem);
+    }
+
+    .quality-preset:hover {
+      border-color: var(--primary-color);
+    }
+
+    .quality-preset.active {
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    .quality-slider-container {
+      margin-top: 1rem;
+    }
+
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.25rem;
+      font-size: 0.6875rem;
+      color: var(--text-light);
+    }
+
+    .quality-slider {
+      width: 100%;
+      height: 6px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 3px;
+      outline: none;
+    }
+
+    .quality-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: clamp(16px, 3vw, 18px);
+      height: clamp(16px, 3vw, 18px);
+      border-radius: 50%;
+      background: var(--primary-color);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .quality-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 5px rgba(0, 86, 210, 0.5);
+    }
+
+    .quality-visual {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+      gap: clamp(0.5rem, 2vw, 1rem);
+      flex-wrap: wrap;
+    }
+
+    .quality-visual-item {
+      text-align: center;
+      font-size: clamp(0.6875rem, 2vw, 0.75rem);
+      color: var(--text-light);
+      transition: var(--transition);
+      min-width: 60px;
+    }
+
+    .quality-visual-item.active {
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    .quality-visual-icon {
+      font-size: clamp(1.25rem, 3vw, 1.5rem);
+      margin-bottom: 0.25rem;
+    }
+
+    /* Convert Button */
+    .btn-convert {
+      background-color: var(--primary-color);
+      color: white;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      padding: clamp(0.75rem, 2vw, 0.875rem) clamp(1rem, 3vw, 1.5rem);
+      font-size: clamp(0.9375rem, 2vw, 1rem);
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      max-width: 300px;
+      margin-top: 1.5rem;
+    }
+
+    .btn-convert:hover {
+      background-color: #003e9f;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-convert:active {
+      transform: translateY(0);
+    }
+
+    /* Footer */
+    footer {
+      background-color: #002c78;
+      color: white;
+      text-align: center;
+      padding: 1.25rem;
+      margin-top: auto;
+      font-size: clamp(0.8125rem, 2vw, 0.875rem);
+    }
+
+    /* Loading state */
+    .loading {
+      position: relative;
+      pointer-events: none;
+    }
+
+    .loading::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 1.5rem;
+      height: 1.5rem;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* Ad Container */
+    .ads-container {
+      margin: 1.5rem auto;
+      text-align: center;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1.25rem;
+      }
+      
+      .preview {
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+        gap: 0.5rem;
+      }
+      
+      .quality-presets {
+        flex-direction: column;
+      }
+      
+      .quality-preset {
+        min-width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 1.25rem 0.75rem;
+      }
+      
+      .container {
+        margin: 1rem;
+        width: calc(100% - 1rem);
+      }
+      
+      .preview {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      }
+      
+      .btn-convert {
+        max-width: 100%;
+      }
+      
+      .file-input-label {
+        padding: 1.5rem 0.75rem;
+      }
+      
+      .preview-item-info {
+        font-size: 0.625rem;
+        padding: 0.25rem;
+      }
+      
+      .preview-action-btn {
+        width: 1.25rem;
+        height: 1.25rem;
+        font-size: 0.625rem;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .preview {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      }
+      
+      .quality-visual-item {
+        min-width: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class="fas fa-file-pdf"></i> Image to PDF Converter</h1>
+  <p>Convert JPG, PNG, or WEBP to HD PDF with adjustable quality settings</p>
+</header>
+
+<div class="container">
+  <!-- AdSense Placeholder -->
+  <div class="ads-container">
+    <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-app-pub-5389843691172276/4068368758"
+      data-ad-slot="1234567890"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- Tool UI -->
+  <div class="form-group">
+    <div class="file-input-wrapper">
+      <label for="imageInput" class="file-input-label">
+        <i class="fas fa-cloud-upload-alt"></i>
+        <span>Click to upload or drag & drop images</span>
+      </label>
+      <input type="file" id="imageInput" accept="image/*" multiple />
+    </div>
+  </div>
+
+  <div class="preview-container" id="previewContainer">
+    <div class="preview-header">
+      <span class="preview-title">Selected Images (<span id="imageCount">0</span>)</span>
+      <button class="clear-all" id="clearAllBtn">
+        <i class="fas fa-trash-alt"></i> Clear All
+      </button>
+    </div>
+    <div class="preview" id="preview"></div>
+  </div>
+
+  <div class="quality-settings">
+    <div class="quality-header">
+      <span class="quality-title">
+        <i class="fas fa-sliders-h"></i> PDF Quality Settings
+      </span>
+      <span class="quality-value" id="qualityValue">Medium (0.8)</span>
+    </div>
+
+    <div class="quality-presets">
+      <button class="quality-preset active" data-quality="1.0">High Quality</button>
+      <button class="quality-preset" data-quality="0.8">Balanced</button>
+      <button class="quality-preset" data-quality="0.6">Small Size</button>
+    </div>
+
+    <div class="quality-slider-container">
+      <input type="range" min="0.1" max="1.0" step="0.1" value="0.8" class="quality-slider" id="qualitySlider">
+      <div class="slider-labels">
+        <span>Low</span>
+        <span>Medium</span>
+        <span>High</span>
+      </div>
+    </div>
+
+    <div class="quality-visual">
+      <div class="quality-visual-item" data-quality="0.1">
+        <div class="quality-visual-icon"><i class="fas fa-file-image"></i></div>
+        <div>Small</div>
+      </div>
+      <div class="quality-visual-item" data-quality="0.4">
+        <div class="quality-visual-icon"><i class="fas fa-file-image"></i></div>
+        <div>Medium</div>
+      </div>
+      <div class="quality-visual-item active" data-quality="0.8">
+        <div class="quality-visual-icon"><i class="fas fa-file-image"></i></div>
+        <div>Good</div>
+      </div>
+      <div class="quality-visual-item" data-quality="1.0">
+        <div class="quality-visual-icon"><i class="fas fa-file-image"></i></div>
+        <div>Best</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <button class="btn-convert" id="convertBtn">
+      <i class="fas fa-file-export"></i> Convert to PDF
+    </button>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 Image2PDF Tool – Built for quality and speed.
+</footer>
+
+<!-- jsPDF library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+  // DOM Elements
+  const imageInput = document.getElementById('imageInput');
+  const previewContainer = document.getElementById('previewContainer');
+  const preview = document.getElementById('preview');
+  const imageCount = document.getElementById('imageCount');
+  const clearAllBtn = document.getElementById('clearAllBtn');
+  const convertBtn = document.getElementById('convertBtn');
+  const qualitySlider = document.getElementById('qualitySlider');
+  const qualityValue = document.getElementById('qualityValue');
+  const qualityPresets = document.querySelectorAll('.quality-preset');
+  const qualityVisualItems = document.querySelectorAll('.quality-visual-item');
+  
+  let images = [];
+  let currentQuality = 0.8;
+
+  // Initialize
+  updateImageCount();
+  setupEventListeners();
+
+  function setupEventListeners() {
+    // File input change
+    imageInput.addEventListener('change', handleFileSelection);
+    
+    // Clear all button
+    clearAllBtn.addEventListener('click', clearAllImages);
+    
+    // Convert button
+    convertBtn.addEventListener('click', convertToPDF);
+    
+    // Quality slider
+    qualitySlider.addEventListener('input', updateQualityFromSlider);
+    
+    // Quality presets
+    qualityPresets.forEach(preset => {
+      preset.addEventListener('click', () => {
+        const quality = parseFloat(preset.dataset.quality);
+        setQuality(quality);
+      });
+    });
+    
+    // Drag and drop functionality
+    setupDragAndDrop();
+  }
+
+  function handleFileSelection(event) {
+    const newImages = Array.from(event.target.files);
+    if (newImages.length > 0) {
+      images = [...images, ...newImages];
+      updatePreview();
+      updateImageCount();
+    }
+  }
+
+  function setupDragAndDrop() {
+    const dropArea = document.querySelector('.file-input-label');
+    
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      dropArea.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropArea.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropArea.addEventListener(eventName, unhighlight, false);
+    });
+
+    function highlight() {
+      dropArea.classList.add('highlight');
+    }
+
+    function unhighlight() {
+      dropArea.classList.remove('highlight');
+    }
+
+    dropArea.addEventListener('drop', handleDrop, false);
+
+    function handleDrop(e) {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      if (files.length) {
+        imageInput.files = files;
+        const event = new Event('change');
+        imageInput.dispatchEvent(event);
+      }
+    }
+  }
+
+  function updatePreview() {
+    preview.innerHTML = '';
+    if (images.length === 0) {
+      previewContainer.style.display = 'none';
+      return;
+    }
+    
+    previewContainer.style.display = 'block';
+    
+    images.forEach((file, index) => {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const previewItem = document.createElement('div');
+        previewItem.className = 'preview-item';
+        
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.alt = file.name;
+        img.loading = 'lazy'; // Add lazy loading
+        
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'preview-item-info';
+        infoDiv.textContent = `${file.name.substring(0, 20)}${file.name.length > 20 ? '...' : ''} (${formatFileSize(file.size)})`;
+        
+        const actionsDiv = document.createElement('div');
+        actionsDiv.className = 'preview-item-actions';
+        
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'preview-action-btn remove';
+        removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+        removeBtn.title = 'Remove this image';
+        removeBtn.onclick = (e) => {
+          e.stopPropagation();
+          removeImage(index);
+        };
+        
+        actionsDiv.appendChild(removeBtn);
+        previewItem.appendChild(img);
+        previewItem.appendChild(infoDiv);
+        previewItem.appendChild(actionsDiv);
+        preview.appendChild(previewItem);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+  }
+
+  function removeImage(index) {
+    images.splice(index, 1);
+    updatePreview();
+    updateImageCount();
+  }
+
+  function clearAllImages() {
+    if (images.length === 0) return;
+    
+    if (confirm('Are you sure you want to remove all images?')) {
+      images = [];
+      imageInput.value = '';
+      updatePreview();
+      updateImageCount();
+    }
+  }
+
+  function updateImageCount() {
+    imageCount.textContent = images.length;
+    clearAllBtn.style.display = images.length > 0 ? 'flex' : 'none';
+  }
+
+  function updateQualityFromSlider() {
+    const quality = parseFloat(qualitySlider.value);
+    setQuality(quality);
+  }
+
+  function setQuality(quality) {
+    currentQuality = quality;
+    qualitySlider.value = quality;
+    
+    // Update quality value display
+    let qualityText = '';
+    if (quality >= 0.9) qualityText = 'High (' + quality.toFixed(1) + ')';
+    else if (quality >= 0.7) qualityText = 'Medium (' + quality.toFixed(1) + ')';
+    else if (quality >= 0.5) qualityText = 'Low (' + quality.toFixed(1) + ')';
+    else qualityText = 'Very Low (' + quality.toFixed(1) + ')';
+    
+    qualityValue.textContent = qualityText;
+    
+    // Update preset buttons
+    qualityPresets.forEach(preset => {
+      const presetQuality = parseFloat(preset.dataset.quality);
+      preset.classList.toggle('active', Math.abs(presetQuality - quality) < 0.05);
+    });
+    
+    // Update visual indicators
+    updateQualityVisual(quality);
+  }
+
+  function updateQualityVisual(quality) {
+    qualityVisualItems.forEach(item => {
+      const itemQuality = parseFloat(item.dataset.quality);
+      const isActive = Math.abs(itemQuality - quality) < 0.15;
+      item.classList.toggle('active', isActive);
+      
+      // Adjust icon size based on quality difference
+      const icon = item.querySelector('.quality-visual-icon i');
+      const sizeFactor = 1 - (0.5 * Math.abs(itemQuality - quality));
+      icon.style.fontSize = `${sizeFactor * 1.5}rem`;
+      icon.style.opacity = isActive ? '1' : '0.6';
+    });
+  }
+
+  async function convertToPDF() {
+    if (images.length === 0) {
+      alert("Please upload at least one image.");
+      return;
+    }
+
+    // Show loading state
+    convertBtn.classList.add('loading');
+    convertBtn.disabled = true;
+    convertBtn.innerHTML = '<i class="fas fa-spinner"></i> Processing...';
+    
+    try {
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "pt",
+        format: "a4"
+      });
+
+      // Create a progress indicator
+      const progress = document.createElement('div');
+      progress.style.position = 'fixed';
+      progress.style.top = '0';
+      progress.style.left = '0';
+      progress.style.width = '0%';
+      progress.style.height = '4px';
+      progress.style.backgroundColor = 'var(--primary-color)';
+      progress.style.zIndex = '1000';
+      progress.style.transition = 'width 0.3s ease';
+      document.body.appendChild(progress);
+
+      for (let i = 0; i < images.length; i++) {
+        // Update progress
+        progress.style.width = `${((i + 1) / images.length) * 100}%`;
+        
+        const imgData = await readImageAsDataURL(images[i], currentQuality);
+        const img = new Image();
+        img.src = imgData;
+
+        await new Promise(resolve => {
+          img.onload = () => {
+            const imgWidth = img.width;
+            const imgHeight = img.height;
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const ratio = pageWidth / imgWidth;
+            const scaledHeight = imgHeight * ratio;
+
+            if (i > 0) pdf.addPage();
+            pdf.addImage(img, 'JPEG', 0, 0, pageWidth, scaledHeight, '', 'FAST');
+            resolve();
+          };
+        });
+      }
+
+      // Remove progress indicator
+      document.body.removeChild(progress);
+      
+      // Generate filename with timestamp
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+      pdf.save(`images-to-pdf-${timestamp}.pdf`);
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+      alert("An error occurred while generating the PDF. Please try again.");
+    } finally {
+      // Remove loading state
+      convertBtn.classList.remove('loading');
+      convertBtn.disabled = false;
+      convertBtn.innerHTML = '<i class="fas fa-file-export"></i> Convert to PDF';
+    }
+  }
+
+  function readImageAsDataURL(file, quality) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const img = new Image();
+        img.onload = function () {
+          const canvas = document.createElement("canvas");
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const ctx = canvas.getContext("2d");
+          
+          // Apply quality settings
+          ctx.imageSmoothingQuality = quality >= 0.8 ? 'high' : 
+                                     quality >= 0.5 ? 'medium' : 'low';
+          ctx.drawImage(img, 0, 0);
+          
+          // For very low quality, reduce resolution
+          if (quality < 0.3) {
+            const reducedCanvas = document.createElement("canvas");
+            reducedCanvas.width = img.width * 0.5;
+            reducedCanvas.height = img.height * 0.5;
+            const reducedCtx = reducedCanvas.getContext("2d");
+            reducedCtx.drawImage(canvas, 0, 0, reducedCanvas.width, reducedCanvas.height);
+            resolve(reducedCanvas.toDataURL("image/jpeg", quality));
+          } else {
+            resolve(canvas.toDataURL("image/jpeg", quality));
+          }
+        };
+        img.onerror = reject;
+        img.src = e.target.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+</script>
+
+</body>
+</html>
